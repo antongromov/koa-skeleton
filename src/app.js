@@ -11,7 +11,9 @@ const jwtError = require('./middleware/errors/jwtError');
 
 function createApp() {
   const app = new Koa();
+  // eslint-disable-next-line  global-require
   require('koa-validate')(app);
+  
   app.use(errorHandler);
   app.use(jwtError);
   mongoose.set('useNewUrlParser', true);

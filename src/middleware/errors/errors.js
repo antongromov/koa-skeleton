@@ -1,10 +1,10 @@
-const ExtendableError = require('es6-error');
+const ExtendableError = require("es6-error");
 
 exports.BadRequest = class BadRequest extends ExtendableError {
   constructor(message, status) {
     super();
     this.body = {
-      errors: message,
+      errors: message
     };
     this.status = status || 400;
   }
@@ -12,9 +12,9 @@ exports.BadRequest = class BadRequest extends ExtendableError {
 
 exports.NotFound = class NotFound extends ExtendableError {
   constructor(message, status) {
-    super('Not Found');
+    super("Not Found");
     this.body = {
-      errors: message,
+      errors: message
     };
     this.status = status || 404;
   }

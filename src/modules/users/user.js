@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-const counter = require('./counter');
+const counter = require("./counter");
 
-const userSchema  = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   userId: {
     type: Number,
-    unique: true,
+    unique: true
   },
   username: {
     type: String,
@@ -22,22 +22,31 @@ const userSchema  = new mongoose.Schema({
     maxlength: 127
   },
   likes: {
-    type: [{
-        uid: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}}],
+    type: [
+      {
+        uid: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+      }
+    ]
   }
 });
 
-userSchema.pre('save', function preSave(next) {
+userSchema.pre("save", function preSave(next) {
   if (!this.isNew) {
     next();
     return;
   }
   if (!this.userId) {
-    counter.findOneAndUpdate({_id: 'userId'}, {$inc: { seq: 1} }, {new: true, upsert: true}).then((count) => {
-      this.userId = count.seq;
-      this.username = this.username.toLowerCase();
-      next();
-    }) ;
+    counter
+      .findOneAndUpdate(
+        { _id: "userId" },
+        { $inc: { seq: 1 } },
+        { new: true, upsert: true }
+      )
+      .then(count => {
+        this.userId = count.seq;
+        this.username = this.username.toLowerCase();
+        next();
+      });
   } else {
     next();
   }

@@ -52,19 +52,19 @@ router.post("/logout", async ctx => {
   ctx.body = { success: true };
 });
 
-router.post(
-  "/me/update-password",
-  async ctx => {
-    const { goOn } = ctx.checkBody("password").notEmpty().len(5, 20);
-    if (!goOn) {
-      ctx.response.status = 400;
-      throw new BadRequest("Password is invalid", 400);
-    }
-    const { id: userId } = ctx.state.user;
-    const { password } = ctx.request.body;
-    await updatePassword(userId, password);
-    ctx.body = { success: true };
+router.post("/me/update-password", async ctx => {
+  const { goOn } = ctx
+    .checkBody("password")
+    .notEmpty()
+    .len(5, 20);
+  if (!goOn) {
+    ctx.response.status = 400;
+    throw new BadRequest("Password is invalid", 400);
   }
-);
+  const { id: userId } = ctx.state.user;
+  const { password } = ctx.request.body;
+  await updatePassword(userId, password);
+  ctx.body = { success: true };
+});
 
 module.exports = router;

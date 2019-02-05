@@ -58,7 +58,6 @@
     ],
     "serial": true,
     "webrose": true,
-    "tap": true,
     "verbose": true
   }
 }
